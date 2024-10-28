@@ -1,108 +1,205 @@
+// // Save.jsx
+// import React, { useEffect, useState } from 'react';
+// import { Container, Row, Col } from 'react-bootstrap';
+// import { toast } from 'react-toastify';
+// import BookCard from './BookCard';
+
+// function Save() {
+//     const [savedBooks, setSavedBooks] = useState([]);
+
+//     useEffect(() => {
+//         async function getSavedBooks() {
+//             try {
+//                 const response = await fetch('http://localhost:3000/api/books');
+//                 if (!response.ok) {
+//                     throw new Error('Failed to fetch saved books');
+//                 }
+//                 const json = await response.json();
+//                 setSavedBooks(json.data);
+//             } catch (err) {
+//                 console.error(err);
+//                 toast.error('Error getting saved books', {
+//                     position: toast.POSITION.TOP_CENTER,
+//                 });
+//             }
+//         }
+//         getSavedBooks();
+//     }, []);
+
+//     const handleDeleteBook = async (book) => {
+//         try {
+//             const response = await fetch(`http://localhost:3000/api/books/${book.id}`, {
+//                 headers: { 'Content-Type': 'application/json' },
+//                 method: 'DELETE',
+//             });
+            
+//             const json = await response.json();
+//             console.log(json);
+//             console.log("Deleting book with _id:", book._id);
+
+//             if (json.success) {
+//                 setSavedBooks(savedBooks.filter(b => b._id !== book._id));
+//                 toast.success('The book has been removed successfully!', {
+//                     position: toast.POSITION.TOP_CENTER,
+//                 });
+//             } else {
+//                 toast.error('Error removing book', {
+//                     position: toast.POSITION.TOP_CENTER,
+//                 });
+//             }
+//         } catch (error) {
+//             console.log(error);
+//             toast.error('Error removing book', {
+//                 position: toast.POSITION.TOP_CENTER,
+//             });
+//         }
+//     };
+
+//     const sendEmail = async () => {
+//         try {
+//             const userEmail = "kesavaprabhal.22cse@kongu.edu"; // Replace with the actual logged-in user's email
+//             const response = await fetch('http://localhost:3000/api/send-email', {
+//                 method: 'POST',
+//                 headers: { 'Content-Type': 'application/json' },
+//                 body: JSON.stringify({ userEmail, books: savedBooks }),
+//             });
+
+//             if (!response.ok) throw new Error('Failed to send email');
+
+//             toast.success('Email sent successfully!', { position: toast.POSITION.TOP_CENTER });
+//         } catch (error) {
+//             console.error('Error sending email:', error);
+//             toast.error('Error sending email', { position: toast.POSITION.TOP_CENTER });
+//         }
+//     };
+
+//     return (
+//         <Container fluid className='my-5 p-3 ml-5'>
+//             <Row className='mx-auto'>
+//                 <h3 className='px-3 mx-5 font-weight-bold' style={{ color: '#fb2' }}>
+//                     Saved Books
+//                 </h3>
+//                 <button onClick={sendEmail} className="ml-3 btn btn-primary">Send Saved Books to Email</button>
+//             </Row>
+
+//             <Row className='ml-5'>
+//                 {savedBooks.length > 0 ? (
+//                     savedBooks.map((book) => (
+//                         <Col key={book.id} className='my-3'>
+//                             <BookCard book={book} onDelete={handleDeleteBook} />
+//                         </Col>
+//                     ))
+//                 ) : (
+//                     <Col>
+//                         <h5>No saved books found.</h5>
+//                     </Col>
+//                 )}
+//             </Row>
+//         </Container>
+//     );
+// }
+
+// export default Save;
+
+
 import React, { useEffect, useState } from 'react';
-import { Button, Container, Col, Row, Card } from 'react-bootstrap';
+import { Container, Row, Col } from 'react-bootstrap';
 import { toast } from 'react-toastify';
+import BookCard from './BookCard';
 
-function Save () {
-	const [ savedBooks, setSavedBooks ] = useState([]);
+function Save() {
+    const [savedBooks, setSavedBooks] = useState([]);
 
-	useEffect(
-		() => {
-			async function getSavedBooks () {
-				try {
-					const response = await fetch('/api/books');
-					const json = await response.json();
-					setSavedBooks(json.data);
-				} catch (err) {
-                    console.error(err);
-                    toast.error('Error getting saved books', {
-                        position: toast.POSITION.TOP_CENTER
-                    });
-				}
-			}
-			getSavedBooks();
-		},
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-		[]
-	);
+    useEffect(() => {
+        async function getSavedBooks() {
+            try {
+                const response = await fetch('http://localhost:3000/api/books');
+                if (!response.ok) {
+                    throw new Error('Failed to fetch saved books');
+                }
+                const json = await response.json();
+                setSavedBooks(json.data);
+            } catch (err) {
+                console.error(err);
+                toast.error('Error getting saved books', {
+                    position: toast.POSITION.TOP_CENTER,
+                });
+            }
+        }
+        getSavedBooks();
+    }, []);
 
-	const handleDeleteBook = async book => {
-		try {
-			const response = await fetch(`/api/books/${book.id}`, {
-				headers: {
-					'Content-Type': 'application/json'
-				},
-
-				method: 'DELETE'
-			});
-			const json = await response.json();
-
-			if (json.data) {
-				setSavedBooks(savedBooks.filter(book => book.id !== json.data.id));
-				toast.success('The book is removed successfully!', {
-					position: toast.POSITION.TOP_CENTER
-				});
-			}
-		} catch (error) {
-            console.log(error);
-            toast.error('Error removing books', {
-                position: toast.POSITION.TOP_CENTER
+    const handleDeleteBook = async (book) => {
+        try {
+            const response = await fetch(`http://localhost:3000/api/books/${book.id}`, {
+                headers: { 'Content-Type': 'application/json' },
+                method: 'DELETE',
             });
-		}
-	};
+            
+            const json = await response.json();
+            console.log(json);
+            console.log("Deleting book with _id:", book._id);
 
-	return (
-		<Container fluid className='my-5 p-3 ml-5'>
-			<Row className='mx-auto'>
-				<h3 className='px-3 mx-5 font-weight-bold' style={{ color: '#fb2' }}>
-					Saved Books
-				</h3>
-			</Row>
+            if (json.success) {
+                setSavedBooks(savedBooks.filter(b => b._id !== book._id));
+                toast.success('The book has been removed successfully!', {
+                    position: toast.POSITION.TOP_CENTER,
+                });
+            } else {
+                toast.error('Error removing book', {
+                    position: toast.POSITION.TOP_CENTER,
+                });
+            }
+        } catch (error) {
+            console.log(error);
+            toast.error('Error removing book', {
+                position: toast.POSITION.TOP_CENTER,
+            });
+        }
+    };
 
-			<Row className='ml-5'>
-				{savedBooks &&
-					savedBooks.map((book, index) => (
-						<div key={index} className='my-3'>
-							<Col className='mb-4'>
-								<Card style={{ width: '325px', backgroundColor: '#dcf8e8' }} className='p-4'>
-									{book.image && <Card.Img variant='top' src={book.image} style={{ height: 320 }} />}
+    const sendEmail = async () => {
+        try {
+            const userEmail = "kesavaprabhal.22cse@kongu.edu"; // Replace with the actual logged-in user's email
+            const response = await fetch('http://localhost:3000/api/send-email', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ userEmail, books: savedBooks }),
+            });
 
-									<Card.Body>
-										{book.title && <Card.Title style={{ color: '#306' }}>{book.title}</Card.Title>}
+            if (!response.ok) throw new Error('Failed to send email');
 
-										{book.authors && (
-											<Card.Title className='font-italic text-muted' style={{ fontSize: '1.1rem' }}>
-												By: {book.authors[0]}
-											</Card.Title>
-										)}
+            toast.success('Email sent successfully!', { position: toast.POSITION.TOP_CENTER });
+        } catch (error) {
+            console.error('Error sending email:', error);
+            toast.error('Error sending email', { position: toast.POSITION.TOP_CENTER });
+        }
+    };
 
-										{book.description && <Card.Text>{book.description.substr(0, 100)}</Card.Text>}
+    return (
+        <Container fluid className='my-5 p-3 ml-5'>
+            <Row className='mx-auto'>
+                <h3 className='px-3 mx-5 font-weight-bold' style={{ color: '#fb2' }}>
+                    Saved Books
+                </h3>
+                <button onClick={sendEmail} className="ml-3 btn btn-primary">Send Saved Books to Email</button>
+            </Row>
 
-										{book.infoLink && (
-											<Card.Text>
-												<a href={book.infoLink} target='_blank' rel='noreferrer'>
-													View Details
-												</a>
-											</Card.Text>
-										)}
-
-										<div className='mt-4'>
-											<Button
-												size='sm'
-												variant='warning'
-												onClick={() => {
-													handleDeleteBook(book);
-												}}>
-												Remove
-											</Button>
-										</div>
-									</Card.Body>
-								</Card>
-							</Col>
-						</div>
-					))}
-			</Row>
-		</Container>
-	);
+            <Row className='ml-5'>
+                {savedBooks.length > 0 ? (
+                    savedBooks.map((book) => (
+                        <Col key={book.id} className='my-3'>
+                            <BookCard book={book} onDelete={handleDeleteBook} />
+                        </Col>
+                    ))
+                ) : (
+                    <Col>
+                        <h5>No saved books found.</h5>
+                    </Col>
+                )}
+            </Row>
+        </Container>
+    );
 }
 
 export default Save;

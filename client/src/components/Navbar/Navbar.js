@@ -19,12 +19,12 @@ function Navbar() {
 	return (
 		<nav className='Navbar'>
 			<div className='Navbar-brand'>
-				<Link to='/'><img src='assets/book-logo.png' style={{width: 32, height: 32}} alt='book-logo'/> </Link>
+				<Link to='/'><img src='assets/book-logo.png' style={{width: 120, height: 60}} alt='book-logo'/> </Link>
 			</div>
             
 			<ul className='Navbar-links'>
                 {isSearch && <li className='Navbar-link'>
-					<Link to='/'> Search Books </Link>
+					<Link to='/search'> Search Books </Link>
 				</li>}
                 {!isSearch && <li className='Navbar-link'>
 					<Link to='/save'> View Saved Books </Link>

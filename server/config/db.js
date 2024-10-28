@@ -1,4 +1,6 @@
+// db.js
 const mongoose = require('mongoose');
+
 async function db() {
     try {
         await mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/googlebooks', {
@@ -7,10 +9,10 @@ async function db() {
             useFindAndModify: false,
             useCreateIndex: true
         });
-        console.log('successfuly connected to db');
+        console.log('Successfully connected to DB');
     } catch (error) {
-        console.log('error connecting to db: ');
-        console.log(error);
+        console.error('Error connecting to DB:', error);
     }
 }
+
 module.exports = db;

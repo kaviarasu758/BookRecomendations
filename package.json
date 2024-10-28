@@ -5,6 +5,7 @@
     "main": "server.js",
     "scripts": {
         "start": "node server/server.js",
+        "seed": "node seeds/seeds.js",
         "start:server": "nodemon server/server.js",
         "start:client": "cd client && yarn start",
         "dev": "concurrently \"yarn run start:server\" \"yarn run start:client\"",
@@ -16,11 +17,17 @@
     "author": "",
     "license": "ISC",
     "dependencies": {
-        "dotenv": "^8.2.0",
+        "bcrypt": "^5.1.1",
+        "dotenv": "^8.6.0",
         "express": "^4.17.1",
+        "inquirer": "^12.0.0",
+        "jsonwebtoken": "^9.0.2",
         "mongodb": "^3.6.3",
         "mongoose": "^5.11.7",
+        "nodemailer": "^6.9.15",
+        "nodemon": "^3.1.7",
         "socket.io": "^3.0.4",
+        "test": "^3.3.0",
         "yarn": "^1.22.10"
     }
 }

@@ -15,10 +15,6 @@ function Footer () {
                     <Link to='/save' className='px-2'>
                         < BsBookmarks size={ 20 } style={ { fill: '#fb2' } } />
                     </Link>
-					<small className='text-muted mx-5 px-5'>
-						{' '}
-						Copyright &copy; 2020 by Bing Z. <span style={{ color: 'red' }}>&hearts;</span>{' '}
-					</small>{' '}
 				</div>
 			</Navbar>
 		</footer>

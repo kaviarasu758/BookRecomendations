@@ -2,11 +2,11 @@
 	background-image: url('../hero.jpg');
 	background-position: center;
 	background-size: cover;
-	height: 50vh;
+	height: 120vh;
 }
 
 .Search-title {
-	color: rgb(8, 187, 2);
+	color: rgb(118, 18, 21);
 	font-weight: 700;
 	letter-spacing: 0.2rem;
 }
