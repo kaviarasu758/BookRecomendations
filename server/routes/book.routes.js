@@ -1,3 +1,4 @@
+
 const router = require('express').Router();
 const { Book } = require('../models');
 
@@ -51,6 +52,17 @@ router.get('/search', async (req, res) => {
     } catch (e) {
         console.error(e);
         res.status(500).json({ success: false, message: 'Error searching for books' });
+    }
+});
+
+// Route to get the count of saved books
+router.get('/count', async (req, res) => {
+    try {
+        const count = await Book.countDocuments();
+        res.status(200).json({ success: true, count });
+    } catch (error) {
+        console.error('Error fetching saved books count:', error);
+        res.status(500).json({ success: false, message: 'Error fetching saved books count' });
     }
 });
 

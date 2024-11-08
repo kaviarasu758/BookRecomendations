@@ -13,28 +13,30 @@ import { ToastContainer, Zoom } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
-	const [isLogin, setIsLogin] = useState(true);
+    const [isLogin, setIsLogin] = useState(true);
+    const [userEmail, setUserEmail] = useState(''); // Add userEmail state
 
-	return (
-		<BrowserRouter>
-			<GlobalProvider>
-				<Navbar />
-				<main className='App'>
-					<Switch>
-						{/* Show Login or Signup based on isLogin state */}
-						<Route exact path='/'>
-							{isLogin ? <Login setIsLogin={setIsLogin} /> : <Signup setIsLogin={setIsLogin} />}
-						</Route>
-						<Route exact path='/save' component={Save} />
-						<Route exact path='/search' component={Search} />
-						<Route component={NoMatch} />
-					</Switch>
-					<ToastContainer transition={Zoom} autoClose={3000} />
-				</main>
-				<Footer />
-			</GlobalProvider>
-		</BrowserRouter>
-	);
+    return (
+        <BrowserRouter>
+            <GlobalProvider>
+                <Navbar />
+                <main className='App'>
+                    <Switch>
+                        {/* Pass setUserEmail as prop to Login */}
+                        <Route exact path='/'>
+                            {isLogin ? <Login setIsLogin={setIsLogin} setUserEmail={setUserEmail} /> : <Signup setIsLogin={setIsLogin} />}
+                        </Route>
+                        <Route exact path='/save' component={Save} />
+                        <Route exact path='/search' component={Search} />
+                        <Route component={NoMatch} />
+                    </Switch>
+                    <ToastContainer transition={Zoom} autoClose={3000} />
+                </main>
+                {/* Pass userEmail to Footer */}
+                <Footer userEmail={userEmail} />
+            </GlobalProvider>
+        </BrowserRouter>
+    );
 }
 
 export default App;
