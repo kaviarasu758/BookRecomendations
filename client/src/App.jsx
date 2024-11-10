@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Save from './pages/Save';
 import Search from './pages/Search';
+import ContactUs from './components/ContactUs'; 
+import BestSellers from './components/BestSellers'; // Import the BestSellers component
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import NoMatch from './components/NoMatch';
@@ -14,7 +16,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
     const [isLogin, setIsLogin] = useState(true);
-    const [userEmail, setUserEmail] = useState(''); // Add userEmail state
+    const [userEmail, setUserEmail] = useState(''); 
 
     return (
         <BrowserRouter>
@@ -22,17 +24,21 @@ function App() {
                 <Navbar />
                 <main className='App'>
                     <Switch>
-                        {/* Pass setUserEmail as prop to Login */}
                         <Route exact path='/'>
-                            {isLogin ? <Login setIsLogin={setIsLogin} setUserEmail={setUserEmail} /> : <Signup setIsLogin={setIsLogin} />}
+                            {isLogin ? (
+                                <Login setIsLogin={setIsLogin} setUserEmail={setUserEmail} />
+                            ) : (
+                                <Signup setIsLogin={setIsLogin} />
+                            )}
                         </Route>
                         <Route exact path='/save' component={Save} />
                         <Route exact path='/search' component={Search} />
+                        <Route exact path='/contact' component={ContactUs} /> 
+                        <Route exact path='/bestsellers' component={BestSellers} /> {/* Add BestSellers route */}
                         <Route component={NoMatch} />
                     </Switch>
                     <ToastContainer transition={Zoom} autoClose={3000} />
                 </main>
-                {/* Pass userEmail to Footer */}
                 <Footer userEmail={userEmail} />
             </GlobalProvider>
         </BrowserRouter>
