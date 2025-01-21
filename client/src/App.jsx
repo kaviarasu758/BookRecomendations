@@ -37,12 +37,13 @@ function App() {
                         <Route exact path='/bestsellers' component={BestSellers} /> 
                         <Route component={NoMatch} />
                     </Switch>
-                    <ToastContainer transition={Zoom} autoClose={3000} />
+                    <ToastContainer transition={Zoom} autoClose={2999} />
                 </main>
                 <Footer userEmail={userEmail} />
             </GlobalProvider>
         </BrowserRouter>
     );
 }
+
 
 export default App;
