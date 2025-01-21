@@ -17,10 +17,7 @@ function ContactUs() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            // Send the form data to the backend
             const response = await axios.post('http://localhost:3000/api/contact', formData);
-
-            // Check if the request was successful
             if (response.status === 201) {
                 setStatus('Form submitted successfully!');
                 setFormData({

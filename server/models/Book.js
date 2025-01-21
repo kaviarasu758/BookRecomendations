@@ -4,27 +4,27 @@ const bookSchema = new mongoose.Schema({
     id: {
         type: String,
         required: true,
-        unique: true, // Ensure that each book has a unique ID
+        unique: true, 
     },
     title: {
         type: String,
         required: true,
     },
     authors: {
-        type: [String], // Specify the type as an array of strings
-        default: [], // Default to an empty array if no authors are provided
+        type: [String],
+        default: [], 
     },
     description: {
         type: String,
-        default: '', // Default to an empty string if no description is provided
+        default: '', 
     },
     image: {
         type: String,
-        default: '', // Default to an empty string if no image is provided
+        default: '', 
     },
     infoLink: {
         type: String,
-        default: '', // Default to an empty string if no infoLink is provided
+        default: '',
     },
     date: {
         type: Date,
@@ -32,8 +32,6 @@ const bookSchema = new mongoose.Schema({
     },
 });
 
-// Create the Book model
 const Book = mongoose.model('Book', bookSchema);
 
-// Export the model
 module.exports = Book;

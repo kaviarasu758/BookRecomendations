@@ -11,7 +11,7 @@ function Signup({ setIsLogin }) {
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
     const [loading, setLoading] = useState(false);
-    const history = useHistory(); // Use useHistory for navigation
+    const history = useHistory(); 
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -22,7 +22,7 @@ function Signup({ setIsLogin }) {
         e.preventDefault();
         setError('');
         setSuccess('');
-        setLoading(true); // Set loading to true
+        setLoading(true); 
 
         try {
             const response = await fetch('https://localhost:3000/api/auth/signup', {
@@ -37,9 +37,8 @@ function Signup({ setIsLogin }) {
 
             if (data.success) {
                 setSuccess('Account created successfully! Redirecting to login...');
-                // Redirect after 2 seconds
                 setTimeout(() => {
-                    history.push('/'); // Redirect to login page
+                    history.push('/'); 
                 }, 2000);
             } else {
                 setError(data.message || 'Signup failed. Please try again.');
@@ -47,7 +46,7 @@ function Signup({ setIsLogin }) {
         } catch (err) {
             setError('An error occurred. Please try again later.');
         } finally {
-            setLoading(false); // Set loading to false
+            setLoading(false);
         }
     };
 

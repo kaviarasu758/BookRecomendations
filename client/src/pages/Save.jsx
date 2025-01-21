@@ -6,7 +6,7 @@ import BookCard from './BookCard';
 
 function Save() {
     const [savedBooks, setSavedBooks] = useState([]);
-    const [savedBooksCount, setSavedBooksCount] = useState(0); // State for saved books count
+    const [savedBooksCount, setSavedBooksCount] = useState(0); 
 
     useEffect(() => {
         async function getSavedBooks() {
@@ -17,7 +17,7 @@ function Save() {
                 }
                 const json = await response.json();
                 setSavedBooks(json.data);
-                setSavedBooksCount(json.data.length); // Update count based on fetched data
+                setSavedBooksCount(json.data.length); 
             } catch (err) {
                 console.error(err);
                 toast.error('Error getting saved books', {
@@ -41,7 +41,7 @@ function Save() {
 
             if (json.success) {
                 setSavedBooks(savedBooks.filter(b => b._id !== book._id));
-                setSavedBooksCount(savedBooksCount - 1); // Update count after deletion
+                setSavedBooksCount(savedBooksCount - 1); 
                 toast.success('The book has been removed successfully!', {
                     position: toast.POSITION.TOP_CENTER,
                 });
@@ -60,7 +60,7 @@ function Save() {
 
     const sendEmail = async () => {
         try {
-            const userEmail = "kesavaprabhal.22cse@kongu.edu"; // Replace with the actual logged-in user's email
+            const userEmail = "kesavaprabhal.22cse@kongu.edu"; 
             const response = await fetch('http://localhost:3000/api/send-email', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },

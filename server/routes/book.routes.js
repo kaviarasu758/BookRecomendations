@@ -1,8 +1,6 @@
-
+//book.routes.js
 const router = require('express').Router();
 const { Book } = require('../models');
-
-// Route to get all books
 router
     .route('/')
     .get(async (req, res) => {
@@ -15,7 +13,7 @@ router
         }
     })
     .post(async (req, res) => {
-        console.log('Request Body:', req.body); // Log incoming request body for debugging
+        console.log('Request Body:', req.body); 
         try {
             const existingBook = await Book.findOne({ id: req.body.id });
             if (existingBook) {
@@ -29,7 +27,6 @@ router
         }
     });
 
-// Route to delete a book by ID
 router.route('/:id').delete(async (req, res) => {
     try {
         const deletedBook = await Book.findOneAndDelete({ id: req.params.id });
@@ -42,20 +39,16 @@ router.route('/:id').delete(async (req, res) => {
         res.status(500).json({ success: false, message: 'Error deleting book' });
     }
 });
-
-// Route for searching books by title (case-insensitive)
 router.get('/search', async (req, res) => {
-    const searchQuery = req.query.q; // Get search term from query params
+    const searchQuery = req.query.q; 
     try {
-        const data = await Book.find({ title: { $regex: searchQuery, $options: 'i' } }); // Case-insensitive search
+        const data = await Book.find({ title: { $regex: searchQuery, $options: 'i' } }); 
         res.json({ success: true, data });
     } catch (e) {
         console.error(e);
         res.status(500).json({ success: false, message: 'Error searching for books' });
     }
 });
-
-// Route to get the count of saved books
 router.get('/count', async (req, res) => {
     try {
         const count = await Book.countDocuments();

@@ -1,4 +1,4 @@
-
+//Search.jsx
 import React, { useRef, useState } from 'react';
 import Loading from '../components/Loading';
 import Error from '../components/Error';
@@ -14,50 +14,15 @@ function Search() {
     const [error, setError] = useState(false);
 
     const queryRef = useRef();
-
-    // const handleFetchBook = async (e) => {
-    //     e.preventDefault();
-    //     setLoading(true);
-    //     setError(false); // Reset error state on new search
-
-    //     try {
-    //         const query = queryRef.current.value.trim(); // Trim whitespace
-    //         console.log('Searching for:', query);
-
-    //         const response = await fetch(
-    //             `https://www.googleapis.com/books/v1/volumes?q=${query}&key=${process.env.REACT_APP_BOOK_API_KEY}`
-    //         );
-
-    //         if (!response.ok) {
-    //             throw new Error(`Error: ${response.statusText}`);
-    //         }
-
-    //         const result = await response.json();
-    //         console.log('API Response:', result); // Log the result
-    //         dispatch({ type: 'searchResult', payload: result.items });
-    //     } catch (err) {
-    //         setError(true);
-    //         console.error(err);
-    //         toast.error('Error fetching books: ' + err.message, {
-    //             position: toast.POSITION.TOP_CENTER
-    //         });
-    //     } finally {
-    //         setLoading(false);
-    //         queryRef.current.value = '';
-    //         queryRef.current.focus();
-    //     }
-    // };
-
     const handleFetchBook = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setError(false); // Reset error state on new search
+    setError(false); 
 
     try {
-        const query = queryRef.current.value.trim(); // Trim whitespace
-        console.log('Searching for:', query); // Log the search term
+        const query = queryRef.current.value.trim();
+        console.log('Searching for:', query); 
 
-        // Check if query is empty
         if (!query) {
             toast.error('Please enter a search term.', {
                 position: toast.POSITION.TOP_CENTER
@@ -75,7 +40,7 @@ function Search() {
         }
 
         const result = await response.json();
-        console.log('API Response:', result); // Log the result
+        console.log('API Response:', result);
 
         if (!result.items || result.items.length === 0) {
             toast.info('No books found for this search.', {

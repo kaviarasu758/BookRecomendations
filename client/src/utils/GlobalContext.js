@@ -1,9 +1,6 @@
 import { useContext, useReducer, createContext } from 'react';
-
-//setup  global context
 export const GlobalContext = createContext();
 
-// set  up  global provider and reducer
 const initState = {
 	books: []
 };
@@ -25,9 +22,6 @@ const GlobalProvider = props => {
     const [ state, dispatch ] = useReducer(reducer, initState);
 	return <GlobalContext.Provider value={[ state, dispatch ]} {...props} />;
 };
-
-
-//export GlobalProvider
 export default GlobalProvider;
 
 export const useGlobalContext = () => {

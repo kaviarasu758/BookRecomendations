@@ -1,41 +1,43 @@
+// //server.js
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const nodemailer = require('nodemailer');
+const path = require('path');
+const http = require('http');
+const Sio = require('socket.io');
+
 const routes = require('./routes');
 const authRoutes = require('./routes/auth');
-const contactRoutes = require('./routes/contact');  // Import the contact routes
-const app = express();
-const path = require('path');
-const http = require('http').createServer(app);
-const Sio = require('socket.io');
-const io = Sio(http);
-
-// Import your Book model
+const contactRoutes = require('./routes/contact');  
 const Book = require('./models/Book');
-
-// DB connection
 require('./config/db')();
+
+const app = express();
+const server = http.createServer(app);
+const io = Sio(server);
 
 const PORT = process.env.PORT || 3000;
 
-// Middleware
+// Middleware setup
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
+// Route setup
 app.use('/api/auth', authRoutes);
-app.use('/api', contactRoutes);  // Add the contact routes here
+app.use('/api', contactRoutes); 
 app.use(routes);
 
 // Serve static files in production
 if (process.env.NODE_ENV === 'production') {
-    app.use(express.static('client/build'));
+    app.use(express.static(path.join(__dirname, '../client/build')));
     app.get('*', (req, res) => {
         res.sendFile(path.join(__dirname, '../client/build/index.html'));
     });
 }
 
-// Email sending function
+// Function to send email with saved books
 async function sendEmail(recipient, books) {
     try {
         const transporter = nodemailer.createTransport({
@@ -63,17 +65,20 @@ async function sendEmail(recipient, books) {
     }
 }
 
-// Socket.io connection
+// Socket.io connection setup
 io.on('connection', socket => {
-    console.log('A user connected, socket.id is:', socket.id);
+    console.log('A user connected, socket.id:', socket.id);
     socket.emit("your id", socket.id);
+    
+    // Listen for "save book" event and broadcast "saved book title" event
     socket.on('save book', title => {
         io.emit('saved book title', title);
     });
 });
 
+// Endpoint to send email with saved books
 app.post('/api/send-email', async (req, res) => {
-    const { userEmail, books } = req.body; // Extract from request body
+    const { userEmail, books } = req.body; 
     try {
         await sendEmail(userEmail, books);
         res.status(200).json({ message: 'Email sent successfully' });
@@ -82,8 +87,7 @@ app.post('/api/send-email', async (req, res) => {
     }
 });
 
-
-// Recommendations endpoint
+// Endpoint to fetch book recommendations
 app.get('/api/recommendations', async (req, res) => {
     const { searchTerm } = req.query;
     try {
@@ -108,7 +112,8 @@ app.get('/api/recommendations', async (req, res) => {
     }
 });
 
-// Start server
-http.listen(PORT, () => {
+// Start the server
+server.listen(PORT, () => {
     console.log(`Listening on PORT ${PORT}. http://localhost:${PORT}`);
 });
+

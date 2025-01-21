@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Save from './pages/Save';
 import Search from './pages/Search';
 import ContactUs from './components/ContactUs'; 
-import BestSellers from './components/BestSellers'; // Import the BestSellers component
+import BestSellers from './components/BestSellers'; 
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import NoMatch from './components/NoMatch';
@@ -34,7 +34,7 @@ function App() {
                         <Route exact path='/save' component={Save} />
                         <Route exact path='/search' component={Search} />
                         <Route exact path='/contact' component={ContactUs} /> 
-                        <Route exact path='/bestsellers' component={BestSellers} /> {/* Add BestSellers route */}
+                        <Route exact path='/bestsellers' component={BestSellers} /> 
                         <Route component={NoMatch} />
                     </Switch>
                     <ToastContainer transition={Zoom} autoClose={3000} />
